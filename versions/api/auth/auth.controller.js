@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const User = require("../models/user.model");
+const User = require("../api/models/user.model");
 const bodyparser = require("body-parser");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
@@ -10,7 +10,40 @@ router.use(bodyparser.json());
 router.get("/", (req, res, next) => {
     res.send("Hlledklmnak sa");
 });
-router.post("/login", (req, res, next) => {
+
+exports.signup = (req, res, next) => {
+    User.find({ email: req.body.email })
+        .exec()
+        .then((user) => {
+            if (user.length >= 1) {
+                /*  console.log(user); */
+                return res.status(409).send("User Already exists");
+            } else {
+                bcrypt.hash(req.body.password, 10, (err, hash) => {
+                    if (err) {
+                        return res.status(400).json({
+                            error: err,
+                        });
+                    } else {
+                        const newuser = new User({
+                            email: req.body.email,
+                            password: hash,
+                        });
+                        newuser
+                            .save()
+                            .then((result) => {
+                                res.status(200).send(result);
+                            })
+                            .catch((e) => {
+                                res.status(402).send(e);
+                            });
+                    } //end of else
+                }); //end of hash
+            } //end of else
+        });
+}; //end of route
+
+exports.login = (req, res, next) => {
     User.find({ email: req.body.email })
         .exec()
         .then((user) => {
@@ -41,39 +74,7 @@ router.post("/login", (req, res, next) => {
         .catch((e) => {
             return res.status(401).send(e);
         });
-});
-
-router.post("/signup", (req, res, next) => {
-    User.find({ email: req.body.email })
-        .exec()
-        .then((user) => {
-            if (user.length >= 1) {
-                /*  console.log(user); */
-                return res.status(409).send("User Already exists");
-            } else {
-                bcrypt.hash(req.body.password, 10, (err, hash) => {
-                    if (err) {
-                        return res.status(400).json({
-                            error: err,
-                        });
-                    } else {
-                        const newuser = new User({
-                            email: req.body.email,
-                            password: hash,
-                        });
-                        newuser
-                            .save()
-                            .then((result) => {
-                                res.status(200).send(result);
-                            })
-                            .catch((e) => {
-                                res.status(402).send(e);
-                            });
-                    } //end of else
-                }); //end of hash
-            } //end of else
-        });
-}); //end of route
+};
 
 router.delete("/:userId", (req, res, next) => {
     User.remove({ _id: req.params.userId })
