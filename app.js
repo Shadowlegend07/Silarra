@@ -2,7 +2,7 @@ const express = require("express");
 //const router = express.Router();
 const app = express();
 const mongoose = require("mongoose");
-const userroute = require("./api/routes/user");
+const indexroute = require("./versions/routes/index");
 const bodyparser = require("body-parser");
 app.use(bodyparser.json());
 
@@ -17,6 +17,6 @@ mongoose
         console.log(err);
     });
 
-app.use("/user", userroute);
+app.use("/user", indexroute);
 
 module.exports = app;

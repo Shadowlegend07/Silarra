@@ -64,3 +64,5 @@ router.get("/", (req, res) => {
             res.status(405).send(err);
         });
 });
+
+module.exports = router;
