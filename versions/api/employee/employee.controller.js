@@ -1,6 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var Employee = require("./employee.model");
+var Reimburse = require('./models/reimbursement.model')
+var Leave = require('./models/leave.model');
 
 router.post("/newemployee", (req, res) => {
     var Employee = new Employee({
@@ -64,5 +66,40 @@ router.get("/", (req, res) => {
             res.status(405).send(err);
         });
 });
+
+//post route to ask leave
+
+router.post("/leave", (req, res, next) => {
+    var leave = new Leave({
+        leavetype = req.body.leavetype,
+        leave_start_date: req.body.leave_start_date.leave_start_date,
+        leave_end_date = req.body.leave_end_date,
+        reason_for_leave = req.body.reason_for_leave,
+    });
+    leave.save()
+        .then((result) => {
+            res.status(200).send(result);
+        })
+        .catch((e) => {
+            res.status(405).send(e);
+        })
+});
+
+//route for taking the data related to reimbursment
+
+router.post('/reimburse', (req, res, next) => {
+    var reimburse = new Reimmburse({
+        purpose: req.body.purpose,
+        amount: req.body.amount,
+    })
+
+    reimburse.save()
+        .then((result) => {
+            res.status(200).send(result);
+        })
+        .catch((e) => {
+            res.status(405).send(e);
+        })
+})
 
 module.exports = router;
