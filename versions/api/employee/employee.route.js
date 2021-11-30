@@ -3,6 +3,6 @@ var router = express.Router();
 
 const employeeRoute = require("./employee.controller");
 
-router.use("/", employeeRoute);
+router.use("/employeedetails", employeeRoute);
 
 module.exports = router;

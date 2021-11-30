@@ -6,12 +6,18 @@ const indexroute = require("./versions/routes/index");
 const bodyparser = require("body-parser");
 app.use(bodyparser.json());
 
+const db =
+    "mongodb+srv://root:root@cluster0.mh2bk.mongodb.net/Silarra?retryWrites=true&w=majority";
+
 mongoose
-    .connect("mongodb://localhost:27017/Silaarra", {
+    .connect(db, {
         useNewUrlParser: true,
+        /*  useCreateIndex: true,
+                        useUnifiedTopology: true,
+                        useFindAndModify: false, */
     })
     .then(() => {
-        console.log("Mongodb Connected Successfully");
+        console.log("Successfully Connected to Mongodb");
     })
     .catch((err) => {
         console.log(err);
@@ -20,3 +26,5 @@ mongoose
 app.use("/user", indexroute);
 
 module.exports = app;
+
+///  var userid = req.payload.userID;

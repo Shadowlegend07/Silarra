@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const leaveSchema = mongoose.Schema({
+    employeeid: {
+        type: mongoose.Schema.Types.ObjectId,
+    },
     leavetype: {
         type: String,
         required: true,

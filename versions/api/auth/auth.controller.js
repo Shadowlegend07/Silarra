@@ -8,7 +8,7 @@ const bcrypt = require("bcrypt");
 router.use(bodyparser.json());
 
 router.get("/", (req, res, next) => {
-    res.send("Hlledklmnak sa");
+    res.send("Route is okay");
 });
 
 exports.signup = (req, res, next) => {
@@ -76,15 +76,16 @@ exports.login = (req, res, next) => {
         });
 };
 
-router.delete("/:userId", (req, res, next) => {
-    User.remove({ _id: req.params.userId })
-        .exec()
-        .then(() => {
-            res.status(200).send("User Deleted Successfully");
-        })
-        .catch((e) => {
-            res.status(403).send(e);
+/* router.delete("/:userId", (req, res, next) => {
+            User.remove({ _id: req.params.userId })
+                .exec()
+                .then(() => {
+                    res.status(200).send("User Deleted Successfully");
+                })
+                .catch((e) => {
+                    res.status(403).send(e);
+                });
         });
-});
+         */
 
-module.exports = router;
+//Should not use middleware  router here

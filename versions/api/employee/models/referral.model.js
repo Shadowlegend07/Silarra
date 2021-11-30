@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
-const reimburseSchema = mongoose.Schema({
+const referralSchema = mongoose.Schema({
     employeeid: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    purpose: {
+    referred_name: {
         type: String,
         required: true,
     },
-    amount: {
-        type: Number,
+    role: {
+        type: String,
         required: true,
     },
 });
-
-module.exports = mongoose.model("Reimburse", reimburseSchema);
+//Upload Resume part remaining
+module.exports = mongoose.model("Referral", referralSchema);

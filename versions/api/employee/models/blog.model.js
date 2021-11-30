@@ -1,16 +1,23 @@
 const mongoose = require("mongoose");
 
-const reimburseSchema = mongoose.Schema({
+const blogsSchema = mongoose.Schema({
     employeeid: {
         type: mongoose.Schema.Types.ObjectId,
     },
-    purpose: {
+    title: {
         type: String,
         required: true,
     },
-    amount: {
+    content: {
         type: Number,
         required: true,
+    },
+    category: {
+        type: [String],
+        required: true,
+    },
+    comments_on_blog: {
+        type: [String],
     },
 });
 
