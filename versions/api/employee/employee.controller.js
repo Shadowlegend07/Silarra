@@ -6,6 +6,8 @@ var Reimburse = require("./models/reimbursement.model");
 var Suggestion = require("./models/suggestions.model");
 var Leave = require("./models/leave.model");
 
+
+//to create new employee
 //localhost:4000/user/employee/employeedetails/newemployee
 router.post("/newemployee", (req, res) => {
     var Employee = new Employee({
@@ -58,6 +60,68 @@ router.post("/newemployee", (req, res) => {
         .catch((err) => {
             res.status(402).send(err);
         });
+});
+
+
+
+// to edit the employee details
+//localhost:4000/user/employee/employeedetails/newemployee/id
+router.put("/newemployee/:id", async(req, res) => {
+    try {
+        const employee_id = req.params["id"];
+        const res = await Employee.findByIdAndUpdate({ employee_id }, {
+
+            $set: {
+                firstname: req.body.firstname,
+                lastname: req.body.lastname,
+                fathername: req.body.fathername,
+                dob: req.body.dob,
+                email: req.body.email,
+                phone: req.body.phone,
+                maritalstatus: req.body.maritalstatus,
+                gender: req.body.gender,
+                pfmemberid: req.body.pfmemberid,
+                uan: req.body.uan,
+                currentaddress: req.body.currentaddress,
+                permanentaddress: req.body.permanentaddress,
+                adhar: req.body.adhar,
+                pan: req.body.pan,
+                healthcardino: req.body.healthcardino,
+                cardvalidity: req.body.cardvalidity,
+                selectbank: req.body.selectbank,
+                accounttype: req.body.accounttype,
+                accountholder: req.body.accountholder,
+                accountnumber: req.body.accountnumber,
+                ifcs: req.body.ifcs,
+                employeeid: req.body.employeeid,
+                joiningdate: req.body.joiningdate,
+                title: req.body.title,
+                role: req.body.role,
+                employeetype: req.body.employeetype,
+                previouscompany: req.body.previouscompany,
+                pre_exp_startdate: req.body.pre_exp_startdate,
+                pre_exp_enddate: req.body.pre_exp_enddate,
+                silarra_exp_startdate: req.body.silarra_exp_startdate,
+                silarra_exp_enddate: req.body.silarra_exp_enddate,
+                joiningctc: req.body.joiningctc,
+                prejoiningctc: req.body.prejoiningctc,
+                universityname: req.body.universityname,
+                collegename: req.body.collegename,
+                typeofdegree: req.body.typeofdegree,
+                graduateyear: req.body.graduateyear,
+                collegeyearfrom: req.body.collegeyearfrom,
+                collegeyeartill: req.body.collegeyeartill,
+                graduate: req.body.graduate,
+            },
+        }, {
+            useFindAndModify: false,
+        });
+    } //end of try
+    catch (err) {
+        res.send(err);
+    }
+
+
 });
 
 //localhost:4000/user/employee/employeedetails/
